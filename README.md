@@ -14,3 +14,7 @@ This is french input method, based on the fcitx table input method.
 - 把 `fr-input.png` 复制到 `/usr/share/fcitx/imicon/`
 - 使用`im-switch`将fcitx设置为默认输入法
 - 在fcitx中启用quick3输入法
+
+##screenshot:
+
+![](./screenshot.png)
