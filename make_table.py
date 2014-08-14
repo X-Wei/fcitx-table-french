@@ -10,7 +10,7 @@ The output file can then be transmitted into a .mb file using the command `txt2m
 
 @author: xwei
 '''
-import unicodedata, os
+import unicodedata, os, numpy
 
 
 
@@ -21,27 +21,30 @@ uesp = 'unicode-escape' # encoding for the initial file lesmotfrancais.txt ==>IS
 
 
 def make_table(folder = 'wordlists',outfn='fr_table.txt',remove_prime=False):
-    outlst = set() # use `set` instead of `list` to prevent duplicated lines
+    outlst = []
     
     fns = os.listdir(folder)
-    for fn in fns:
+    for fn in sorted(fns):
         lst = [wd.strip().decode('utf8') for wd in open(folder + os.sep + fn)]
         for word in lst:
             code = unicodedata.normalize('NFD', word).encode('ascii', 'ignore') # convert accented word into non-accented word (code)
             strout = (code + ' ' + word).encode('utf8')
             print strout
-            outlst.add(strout)
+            outlst.append(strout)
             caped_strout = (code.capitalize() + ' ' + word.capitalize()).encode('utf8')
-            outlst.add(caped_strout)
+            outlst.append(caped_strout)
             if remove_prime and "'" in code:
                 strout = (code.replace("'",'') + ' ' + word).encode('utf8')
-                outlst.add(strout)
+                outlst.append(strout)
+                caped_strout = (code.replace("'",'').capitalize() + ' ' + word.capitalize()).encode('utf8')
+                outlst.append(caped_strout)
     
     with open(outfn,'w') as outf:
-#        outf.writelines(outlst)
-        outf.write( "\n".join(sorted(outlst)) )
-        
-    print 'fini! %d mots convertis!' % len(outlst)
+        idx = numpy.unique( numpy.array(outlst), return_index=True )[1]
+        uniquelst = [ outlst[i] for i in sorted(idx) ]#we need to do so to get the unique, unsorted list...
+        outf.write( "\n".join(uniquelst) )
+        print len(outlst), len(uniquelst)
+    print 'fini! %d mots convertis!' % len(uniquelst)
 
 
 
