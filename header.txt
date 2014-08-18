@@ -1,0 +1,14 @@
+;fcitx 版本 0x03 码表文件
+键码=abcdefghijklmnopqrstuvwxyz'"-ABCDEFGHIJKLMNOPQRSTUVWXYZ
+码长=30
+拼音=@
+拼音长度=30
+提示=&
+构词=^
+[数据]
+" «
+" »
+euro €
+dollar $
+ae æ
+oe œ

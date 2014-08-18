@@ -40,6 +40,8 @@ def make_table(folder = 'wordlists',outfn='fr_table.txt',remove_prime=False):
                 outlst.append(caped_strout)
     
     with open(outfn,'w') as outf:
+        headers = open('header.txt','r').readlines()
+        outf.writelines(headers)
         idx = numpy.unique( numpy.array(outlst), return_index=True )[1]
         uniquelst = [ outlst[i] for i in sorted(idx) ]#we need to do so to get the unique, unsorted list...
         outf.write( "\n".join(uniquelst) )
