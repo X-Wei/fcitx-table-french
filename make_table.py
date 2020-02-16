@@ -31,14 +31,15 @@ def make_table(folder='wordlists', outfn='fr_table.txt', remove_prime=False):
     with open(folder + os.sep + fn) as f:
       lst = [wd.strip() for wd in f]
       for word in lst:
-        code = unicodedata.normalize('NFD', word).encode(
+        code = unicodedata.normalize('NFD', word.replace('ß', 'ss')).encode(
             'ascii',
             'ignore')  # convert accented word into non-accented word (code)
         strout = f'{code.decode()} {word}'
         print(strout)
         outlst.append(strout)
-        caped_strout = f'{code.capitalize().decode()} {word.capitalize()}'
-        outlst.append(caped_strout)
+        if code.decode()[0].islower():
+          caped_strout = f'{code.capitalize().decode()} {word.capitalize()}'
+          outlst.append(caped_strout)
         if remove_prime and "'" in code.decode():
           strout = (code.replace("'", '').decode() + ' ' + word).encode('utf8')
           outlst.append(strout)
