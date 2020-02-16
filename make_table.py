@@ -41,10 +41,10 @@ def make_table(folder='wordlists', outfn='fr_table.txt', remove_prime=False):
           caped_strout = f'{code.capitalize().decode()} {word.capitalize()}'
           outlst.append(caped_strout)
         if remove_prime and "'" in code.decode():
-          strout = (code.replace("'", '').decode() + ' ' + word).encode('utf8')
+          strout = (code.decode().replace("'", '') + ' ' + word)
           outlst.append(strout)
-          caped_strout = (code.replace("'", '').capitalize().decode() + ' ' +
-                          word.capitalize()).encode('utf8')
+          caped_strout = (code.decode().replace("'", '').capitalize() + ' ' +
+                          word.capitalize())
           outlst.append(caped_strout)
 
   with open(outfn, 'w') as outf:
